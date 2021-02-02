@@ -3,8 +3,8 @@ var botonDibujar = document.getElementById("butDraw");
 var dibCanvas = document.getElementById("dibujito");
 var lienzo = dibCanvas.getContext("2d");
 //Eventos.
-numLineas.addEventListener("input", verficaValor);
-botonDibujar.addEventListener("click", dibujoClick);
+numLineas.addEventListener("input", dibujarFigura);
+botonDibujar.addEventListener("click", dibujarFigura);
 
 function drawLine(lienzo, initPoint, endPoint, color) {
     lienzo.beginPath();
@@ -20,18 +20,20 @@ function verficaValor() {
         numLineas.style = "color:aliceblue";
         numLineas.value = parseInt(numLineas.value);
         return true;
+    } else if (numLineas.value == "") {
+        numLineas.style = "color:aliceblue";
+        dibCanvas.width = dibCanvas.width;
+        return false;
     }
+    numLineas.value = "No valido.";
     numLineas.style = "color: rgb(255, 138, 138);";
     return false;
 }
 
-function dibujoClick() {
+function dibujarFigura() {
     if (verficaValor() && parseInt(numLineas.value) > 0) {
         dibCanvas.width = dibCanvas.width;
         figura(dibCanvas.width, dibCanvas.height, parseInt(numLineas.value), "#C7FAB0");
-    } else {
-        numLineas.value = "No valido.";
-        numLineas.style = "color: rgb(255, 138, 138);";
     }
 }
 
