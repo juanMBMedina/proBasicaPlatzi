@@ -12,7 +12,6 @@ var color5 = document.getElementById("color5");
 var color6 = document.getElementById("color6");
 // Mensaje de alerta.
 var msjAlerta = document.getElementById("msjAlerta");
-console.log(msjAlerta);
 // Canvas Dibujo.
 var dibCanvas = document.getElementById("dibujito");
 var lienzo = dibCanvas.getContext("2d");
@@ -25,7 +24,7 @@ color3.addEventListener("mouseover", onColor3);
 color4.addEventListener("mouseover", onColor4);
 color5.addEventListener("mouseover", onColor5);
 color6.addEventListener("mouseover", onColor6);
-//botonDibujar.addEventListener("mouseout", prueba2);
+botonDibujar.addEventListener("click", mostrarMsj);
 
 function drawLine(lienzo, initPoint, endPoint, color) {
     lienzo.beginPath();
@@ -58,27 +57,23 @@ function figura(xMax, yMax, lineas, color) {
 
 function verficaValor() {
     if (!isNaN(numLineas.value) && numLineas.value != "" && !/\s/g.test(numLineas.value)) {
-        numLineas.style = "color:aliceblue";
+        numLineas.setAttribute("style", "color:#FFFFFF");
         numLineas.value = parseInt(numLineas.value);
+        mostrarMsj(false, "");
         return true;
-    } else if (numLineas.value == "") {
-        numLineas.style = "color:aliceblue";
-        dibCanvas.width = dibCanvas.width;
-        return false;
     }
-    numLineas.value = "No valido.";
-    numLineas.style = "color: rgb(255, 138, 138);";
+    mostrarMsj(true, "No valido.");
+    numLineas.setAttribute("style", "color:#FF5F5F");
     return false;
 }
 
 function dibujarFigura() {
-    if (verficaValor() && parseInt(numLineas.value) > 0) {
+    if (verficaValor() && parseInt(numLineas.value) >= 0) {
         dibCanvas.width = dibCanvas.width;
         if (colorLine == "") {
-            console.log("Debe aparecer...");
-            msjAlerta.setAttribute("hidden", "false");
+            mostrarMsj(true, "Pasar el mouse por algún color para dibujar");
         } else {
-            msjAlerta.setAttribute("hidden", "true");
+            mostrarMsj(false, "");
             figura(dibCanvas.width, dibCanvas.height, parseInt(numLineas.value), colorLine);
         }
     }
@@ -112,4 +107,10 @@ function onColor5() {
 function onColor6() {
     colorLine = "#FF5F5F";
     dibujarFigura();
+}
+
+function mostrarMsj(estadoMsj, msj) {
+    msjAlerta.textContent = msj;
+    if (estadoMsj) msjAlerta.setAttribute("style.display", "block");
+    else msjAlerta.setAttribute("style.display", "none");
 }

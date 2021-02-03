@@ -52,3 +52,8 @@ input[type="button"] {
 input[type="text"]:hover {
     background-color: rgba(59, 58, 58, 0.932);
 }
+
+p.msjError {
+    color: #FF5F5F;
+    display: block;
+}
