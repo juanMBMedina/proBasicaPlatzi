@@ -5,8 +5,34 @@ body {
     text-align: center;
 }
 
-canvas {
+canvas.mapadibujo {
     background-color: black;
+}
+
+canvas.color {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+}
+
+#color1 {
+    background-color: rgb(255, 255, 255);
+}
+
+#color2 {
+    background-color: rgb(253, 251, 99);
+}
+
+#color3 {
+    background-color: rgb(85, 193, 255);
+}
+
+#color4 {
+    background-color: rgb(221, 108, 255);
+}
+
+#color5 {
+    background-color: rgb(255, 95, 95);
 }
 
 input[type="text"],

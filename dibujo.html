@@ -10,15 +10,31 @@
 
 <body>
     <h1>Dibujo en Canvas</h1>
-    <div>
-        <p>
-            Cuantas lineas quieres:
-            <input type="text" id="txtIn" />
-        </p>
-        <canvas width="300" height="300" id="dibujito"></canvas>
-        <p>Así queda tu dibujo</p>
-        <input type="button" id="butDraw" value="Dibujar" />
-    </div>
+    <p>
+        Cuantas lineas quieres:
+        <input type="text" id="txtIn" />
+    </p>
+    <canvas class="mapadibujo" width="300px" height="300px" id="dibujito"></canvas>
+    <br>
+    <p>
+        <span>
+            <canvas class="color" id="color1"></canvas>
+        </span>
+        <span>
+            <canvas class="color"  id="color2"></canvas>
+        </span>
+        <span>
+            <canvas class="color"  id="color3"></canvas>
+        </span>
+        <span>
+            <canvas class="color"  id="color4"></canvas>
+        </span>
+        <span>
+            <canvas class="color"  id="color5"></canvas>
+        </span>
+    </p>
+    <h2>Así queda tu dibujo</h2>
+    <input type="button" id="butDraw" value="Dibujar" />
     <script src="dibujo.js" type="text/javascript"></script>
 </body>
 
