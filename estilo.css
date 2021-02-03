@@ -5,17 +5,21 @@ body {
     text-align: center;
 }
 
-canvas.mapadibujo {
+.botonMenu {
+    font-size: inherit;
+}
+
+.mapadibujo {
     background-color: black;
 }
 
-canvas.marcoColor {
+.marcoColor {
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
 
-canvas.marcoIndicador {
+.marcoIndicador {
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -52,10 +56,8 @@ canvas.marcoIndicador {
     background-color: #ffffff00;
 }
 
-input[type="text"],
-input[type="button"] {
+input[type="text"] {
     font-size: large;
-    width: 100px;
     border-radius: 10px;
     text-align: center;
     color: aliceblue;
@@ -66,7 +68,14 @@ input[type="text"]:hover {
     background-color: rgba(59, 58, 58, 0.932);
 }
 
-p.msjError {
+.msjError {
     color: #FF5F5F;
     display: block;
+}
+
+.barraNav {
+    list-style: none;
+    display: flex;
+    align-items: left;
+    font-size: 20px;
 }

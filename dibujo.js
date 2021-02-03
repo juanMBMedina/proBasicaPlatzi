@@ -1,8 +1,8 @@
 //Parametos Default
 var colorLine = "";
+var maxTam = "1000px";
 // Objetos
 var numLineas = document.getElementById("txtIn");
-var botonDibujar = document.getElementById("butDraw");
 // Paletas de colores
 var color1 = document.getElementById("color1");
 var color2 = document.getElementById("color2");
@@ -18,7 +18,6 @@ var dibCanvas = document.getElementById("dibujito");
 var lienzo = dibCanvas.getContext("2d");
 // Eventos.
 numLineas.addEventListener("input", dibujarFigura);
-botonDibujar.addEventListener("click", dibujarFigura);
 color1.addEventListener("mouseover", onColor1);
 color2.addEventListener("mouseover", onColor2);
 color3.addEventListener("mouseover", onColor3);
@@ -26,7 +25,6 @@ color4.addEventListener("mouseover", onColor4);
 color5.addEventListener("mouseover", onColor5);
 color6.addEventListener("mouseover", onColor6);
 color7.addEventListener("mouseover", onColor7);
-botonDibujar.addEventListener("click", mostrarMsj);
 
 function drawLine(lienzo, initPoint, endPoint, color) {
     lienzo.beginPath();
@@ -44,16 +42,6 @@ function figura(xMax, yMax, lineas, color) {
         drawLine(lienzo, [delta * l, yMax], [xMax, yMax - delta * (l + 1)], color);
         drawLine(lienzo, [xMax, yMax - delta * (l + 1)], [xMax - delta * (l + 1), 0], color);
         drawLine(lienzo, [xMax - delta * l, 0], [0, delta * (l + 1)], color);
-
-        drawLine(lienzo, [delta * l, delta * l], [xMax, 0], color);
-        drawLine(lienzo, [delta * l, delta * l], [0, yMax], color);
-        drawLine(lienzo, [delta * l, yMax - delta * l], [xMax, yMax], color);
-        drawLine(lienzo, [delta * l, yMax - delta * l], [0, 0], color);
-
-        drawLine(lienzo, [delta * l, yMax / 2], [xMax / 2, 0], color);
-        drawLine(lienzo, [delta * l, yMax / 2], [xMax / 2, yMax], color);
-        drawLine(lienzo, [xMax / 2, delta * l], [xMax, yMax / 2], color);
-        drawLine(lienzo, [xMax / 2, delta * l], [0, yMax / 2], color);
     }
 }
 
