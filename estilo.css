@@ -9,30 +9,34 @@ canvas.mapadibujo {
     background-color: black;
 }
 
-canvas.color {
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
+canvas.marcocolor {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 
 #color1 {
-    background-color: rgb(255, 255, 255);
+    background-color: #FFFFFF;
 }
 
 #color2 {
-    background-color: rgb(253, 251, 99);
+    background-color: #FDFB63;
 }
 
 #color3 {
-    background-color: rgb(85, 193, 255);
+    background-color: #55C1FF;
 }
 
 #color4 {
-    background-color: rgb(221, 108, 255);
+    background-color: #C7FAB0;
 }
 
 #color5 {
-    background-color: rgb(255, 95, 95);
+    background-color: #DD6CFF;
+}
+
+#color6 {
+    background-color: #FF5F5F;
 }
 
 input[type="text"],

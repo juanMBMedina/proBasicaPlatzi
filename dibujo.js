@@ -1,17 +1,31 @@
-//Prametos Default
-var colorLineDefault = "#C7FAB0";
-var colorLine = colorLineDefault;
+//Parametos Default
+var colorLine = "";
 // Objetos
 var numLineas = document.getElementById("txtIn");
 var botonDibujar = document.getElementById("butDraw");
+// Paletas de colores
+var color1 = document.getElementById("color1");
+var color2 = document.getElementById("color2");
+var color3 = document.getElementById("color3");
+var color4 = document.getElementById("color4");
+var color5 = document.getElementById("color5");
+var color6 = document.getElementById("color6");
+// Mensaje de alerta.
+var msjAlerta = document.getElementById("msjAlerta");
+console.log(msjAlerta);
+// Canvas Dibujo.
 var dibCanvas = document.getElementById("dibujito");
 var lienzo = dibCanvas.getContext("2d");
-//Eventos.
+// Eventos.
 numLineas.addEventListener("input", dibujarFigura);
 botonDibujar.addEventListener("click", dibujarFigura);
-//Prueba
-botonDibujar.addEventListener("mouseover", prueba1);
-botonDibujar.addEventListener("mouseout", prueba2);
+color1.addEventListener("mouseover", onColor1);
+color2.addEventListener("mouseover", onColor2);
+color3.addEventListener("mouseover", onColor3);
+color4.addEventListener("mouseover", onColor4);
+color5.addEventListener("mouseover", onColor5);
+color6.addEventListener("mouseover", onColor6);
+//botonDibujar.addEventListener("mouseout", prueba2);
 
 function drawLine(lienzo, initPoint, endPoint, color) {
     lienzo.beginPath();
@@ -60,21 +74,42 @@ function verficaValor() {
 function dibujarFigura() {
     if (verficaValor() && parseInt(numLineas.value) > 0) {
         dibCanvas.width = dibCanvas.width;
-        if (colorLine != colorLineDefault) {
-            figura(dibCanvas.width, dibCanvas.height, parseInt(numLineas.value), colorLine);
+        if (colorLine == "") {
+            console.log("Debe aparecer...");
+            msjAlerta.setAttribute("hidden", "false");
         } else {
-            figura(dibCanvas.width, dibCanvas.height, parseInt(numLineas.value), colorLineDefault);
+            msjAlerta.setAttribute("hidden", "true");
+            figura(dibCanvas.width, dibCanvas.height, parseInt(numLineas.value), colorLine);
         }
-
     }
 }
 
-function prueba1() {
+function onColor1() {
     colorLine = "#FFFFFF";
     dibujarFigura();
 }
 
-function prueba2() {
-    colorLine = colorLineDefault;
+function onColor2() {
+    colorLine = "#FDFB63";
+    dibujarFigura();
+}
+
+function onColor3() {
+    colorLine = "#55C1FF";
+    dibujarFigura();
+}
+
+function onColor4() {
+    colorLine = "#C7FAB0";
+    dibujarFigura();
+}
+
+function onColor5() {
+    colorLine = "#DD6CFF";
+    dibujarFigura();
+}
+
+function onColor6() {
+    colorLine = "#FF5F5F";
     dibujarFigura();
 }
