@@ -10,6 +10,7 @@ var color3 = document.getElementById("color3");
 var color4 = document.getElementById("color4");
 var color5 = document.getElementById("color5");
 var color6 = document.getElementById("color6");
+var color7 = document.getElementById("color7");
 // Mensaje de alerta.
 var msjAlerta = document.getElementById("msjAlerta");
 // Canvas Dibujo.
@@ -24,6 +25,7 @@ color3.addEventListener("mouseover", onColor3);
 color4.addEventListener("mouseover", onColor4);
 color5.addEventListener("mouseover", onColor5);
 color6.addEventListener("mouseover", onColor6);
+color7.addEventListener("mouseover", onColor7);
 botonDibujar.addEventListener("click", mostrarMsj);
 
 function drawLine(lienzo, initPoint, endPoint, color) {
@@ -81,36 +83,54 @@ function dibujarFigura() {
 
 function onColor1() {
     colorLine = "#FFFFFF";
+    changeColor7();
     dibujarFigura();
 }
 
 function onColor2() {
     colorLine = "#FDFB63";
+    changeColor7();
     dibujarFigura();
 }
 
 function onColor3() {
     colorLine = "#55C1FF";
+    changeColor7();
     dibujarFigura();
 }
 
 function onColor4() {
     colorLine = "#C7FAB0";
+    changeColor7();
     dibujarFigura();
 }
 
 function onColor5() {
     colorLine = "#DD6CFF";
+    changeColor7();
     dibujarFigura();
 }
 
 function onColor6() {
     colorLine = "#FF5F5F";
+    changeColor7();
     dibujarFigura();
+}
+
+function onColor7() {
+    colorLine = "";
+    color7.setAttribute("style", "background-color: #ffffff00");
+}
+
+function changeColor7() {
+    var style = "background-color: " + colorLine;
+    color7.setAttribute("style", style);
 }
 
 function mostrarMsj(estadoMsj, msj) {
     msjAlerta.textContent = msj;
-    if (estadoMsj) msjAlerta.setAttribute("style.display", "block");
-    else msjAlerta.setAttribute("style.display", "none");
+    style = "";
+    if (estadoMsj) style = "display: block";
+    else style = "display: none";
+    msjAlerta.setAttribute("style", style);
 }
