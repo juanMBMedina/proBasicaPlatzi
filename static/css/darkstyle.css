@@ -84,6 +84,7 @@ body {
 .contGeneral {
     display: inline-block;
     min-width: 350px;
+    min-height: 470px;
     margin: 20px;
 }
 

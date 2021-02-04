@@ -13,7 +13,7 @@ var color7 = document.getElementById("color7");
 // Mensaje de alerta.
 var msjAlerta = document.getElementById("msjAlerta");
 // Canvas Dibujo.
-var dibCanvas = document.getElementById("dibujito");
+var dibCanvas = document.getElementById("dibujo");
 var lienzo = dibCanvas.getContext("2d");
 // Eventos.
 numLineas.addEventListener("input", dibujarFigura);
