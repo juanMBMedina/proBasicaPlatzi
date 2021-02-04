@@ -46,13 +46,11 @@ function figura(xMax, yMax, lineas, color) {
 
 function verficaValor() {
     if (!isNaN(numLineas.value) && numLineas.value != "" && !/\s/g.test(numLineas.value)) {
-        numLineas.setAttribute("style", "color:#FFFFFF");
         numLineas.value = parseInt(numLineas.value);
         mostrarMsj(false, "");
         return true;
     }
     mostrarMsj(true, "No valido.");
-    numLineas.setAttribute("style", "color:#FF5F5F");
     return false;
 }
 

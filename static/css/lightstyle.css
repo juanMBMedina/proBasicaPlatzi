@@ -12,7 +12,7 @@ a {
     padding: 0px;
     font-size: 20px;
     width: 100%;
-    background-color: #695070;
+    background-color: #dd6c2a;
 }
 
 .barraItem {
@@ -23,21 +23,15 @@ a {
 }
 
 li:hover {
-    background-color: #cc9ada;
+    background-color: #f79466;
 }
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: rgba(31, 29, 29, 0.932);
+    background-color: #fff9c4;
     text-align: center;
     margin: 0px;
     color: aliceblue;
-}
-
-.botonMenu {
-    font-size: inherit;
-    background-color: inherit;
-    color: #FFFFFF;
 }
 
 #color1 {
@@ -74,11 +68,11 @@ body {
     border-style: solid;
     border-width: thin;
     border-radius: 10px;
-    border-color: #FFFFFF;
+    border-color: #4d4040;
 }
 
 .contFooter {
-    background-color: #695070;
+    background-color: #dd6c2a;
 }
 
 .contGeneral {
@@ -86,6 +80,8 @@ body {
     min-width: 350px;
     min-height: 470px;
     margin: 20px;
+    /*color texto unico para este tema.*/
+    color: #4d4040;
 }
 
 .contTexto {
@@ -103,16 +99,16 @@ input[type="text"] {
     width: 80%;
     border-radius: 10px;
     text-align: center;
-    color: aliceblue;
-    background-color: rgba(31, 29, 29, 0.932);
+    color: rgb(0, 0, 0);
+    background-color: #FFFFFF;
 }
 
 input[type="text"]:hover {
-    background-color: rgba(59, 58, 58, 0.932);
+    background-color: #fffacc;
 }
 
 .mapadibujo {
-    background-color: black;
+    background-color: #666665;
     width: 350px;
     height: 350px;
     margin: 5px;
@@ -120,7 +116,7 @@ input[type="text"]:hover {
     max-height: 500px;
     border-style: solid;
     border-radius: 5%;
-    border-color: #FFFFFF;
+    border-color: #706f6f;
 }
 
 .marcoColor {
@@ -128,6 +124,8 @@ input[type="text"]:hover {
     height: 50px;
     border-radius: 50%;
     margin: 3px;
+    border-style: solid;
+    border-color: #646464;
 }
 
 .marcoIndicador {
@@ -135,6 +133,8 @@ input[type="text"]:hover {
     height: 25px;
     border-radius: 50%;
     vertical-align: middle;
+    border-style: solid;
+    border-color: #646464;
 }
 
 .msjError {

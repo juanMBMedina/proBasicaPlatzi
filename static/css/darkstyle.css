@@ -34,12 +34,6 @@ body {
     color: aliceblue;
 }
 
-.botonMenu {
-    font-size: inherit;
-    background-color: inherit;
-    color: #FFFFFF;
-}
-
 #color1 {
     background-color: #FFFFFF;
 }
@@ -128,6 +122,8 @@ input[type="text"]:hover {
     height: 50px;
     border-radius: 50%;
     margin: 3px;
+    border-style: solid;
+    border-color: #FFFFFF;
 }
 
 .marcoIndicador {
