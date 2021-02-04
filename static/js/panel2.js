@@ -1,3 +1,20 @@
+function punto(_x, _y, _color, _isInicial) {
+    this.X = _x;
+    this.Y = _y;
+    this.color = _color;
+    this.isInicial = _isInicial;
+    this.isNull = function() {
+        if (this.X == null || this.Y == null) return true;
+        return false;
+    }
+}
+var listaPuntos = new Array();
+var teclas = {
+    UP: 38,
+    DOWN: 40,
+    LEFT: 37,
+    RIGHT: 39
+};
 // Paletas de colores
 var color1 = document.getElementById("color1");
 var color2 = document.getElementById("color2");
@@ -14,20 +31,7 @@ var lienzo = dibCanvas.getContext("2d");
 //Parametos Default
 var colorLine = "";
 var grosorLinea = 2;
-var teclas = {
-    UP: 38,
-    DOWN: 40,
-    LEFT: 37,
-    RIGHT: 39
-};
-var puntoInicial = {
-    X: null,
-    Y: null
-};
-var puntoActual = {
-    X: null,
-    Y: null
-};
+var puntoCursor = new punto(null, null, "#FFF", false);
 var tamPaso = 1;
 var dibujoMouse = false;
 // Eventos.
@@ -41,17 +45,22 @@ color6.addEventListener("mouseover", onColor6);
 color7.addEventListener("mouseover", onColor7);
 // Prueba
 dibCanvas.addEventListener("click", selPuntoIni);
-dibCanvas.addEventListener("mousemove", puntoMouse);
+dibCanvas.addEventListener("mousemove", dibujarCursor);
+dibCanvas.addEventListener("mouseover", dibujarCursor);
 
-
-function dibujarPunto(mapaDibujo, puntoDibujo, color) {
-    drawLine(mapaDibujo, puntoDibujo, { X: puntoDibujo.X - 5, Y: puntoDibujo.Y }, color, 5);
-    drawLine(mapaDibujo, puntoDibujo, { X: puntoDibujo.X + 5, Y: puntoDibujo.Y }, color, 5);
-    drawLine(mapaDibujo, puntoDibujo, { X: puntoDibujo.X, Y: puntoDibujo.Y - 5 }, color, 5);
-    drawLine(mapaDibujo, puntoDibujo, { X: puntoDibujo.X, Y: puntoDibujo.Y + 5 }, color, 5);
+function addPunto(newPunto) {
+    listaPuntos.push(newPunto);
+    //console.log(listaPuntos);
 }
 
-function drawLine(mapaDibujo, initPoint, endPoint, color, anchoLinea) {
+function dibujarPunto(mapaDibujo, puntoDibujo) {
+    dibujarLinea(mapaDibujo, puntoDibujo, { X: puntoDibujo.X - 5, Y: puntoDibujo.Y }, puntoDibujo.color, 5);
+    dibujarLinea(mapaDibujo, puntoDibujo, { X: puntoDibujo.X + 5, Y: puntoDibujo.Y }, puntoDibujo.color, 5);
+    dibujarLinea(mapaDibujo, puntoDibujo, { X: puntoDibujo.X, Y: puntoDibujo.Y - 5 }, puntoDibujo.color, 5);
+    dibujarLinea(mapaDibujo, puntoDibujo, { X: puntoDibujo.X, Y: puntoDibujo.Y + 5 }, puntoDibujo.color, 5);
+}
+
+function dibujarLinea(mapaDibujo, initPoint, endPoint, color, anchoLinea) {
     mapaDibujo.lineWidth = anchoLinea;
     mapaDibujo.beginPath();
     mapaDibujo.strokeStyle = color;
@@ -61,39 +70,47 @@ function drawLine(mapaDibujo, initPoint, endPoint, color, anchoLinea) {
     mapaDibujo.closePath();
 }
 
+function dibujarMundo() {
+    dibCanvas.width = dibCanvas.width;
+    dibujarPunto(lienzo, puntoCursor);
+    if (listaPuntos.length > 1) {
+        for (var i = 0; i < listaPuntos.length; i++) {
+            if (listaPuntos[i].isInicial) i++;
+            dibujarLinea(lienzo, listaPuntos[i - 1], listaPuntos[i], listaPuntos[i].color, grosorLinea);
+        }
+    }
+}
+
 function verficaValor(ptoAct, max) {
     if (ptoAct >= 0 && ptoAct <= max) return true;
     return false;
 }
 
-function dibujaTeclado(evento) {
-    var xFinal = puntoInicial.X,
-        yFinal = puntoInicial.Y;
-    if (evento.keyCode == teclas.UP) {
-        yFinal = puntoInicial.Y - tamPaso;
-    } else if (evento.keyCode == teclas.DOWN) {
-        yFinal = puntoInicial.Y + tamPaso;
-    } else if (evento.keyCode == teclas.LEFT) {
-        xFinal = puntoInicial.X - tamPaso;
-    } else if (evento.keyCode == teclas.RIGHT) {
-        xFinal = puntoInicial.X + tamPaso;
-    }
-    var condicion = verficaValor(xFinal, dibCanvas.width) &&
-        verficaValor(yFinal, dibCanvas.height) && colorLine != "";
-    if (puntoInicial.X == null && puntoInicial.Y == null) {
-        mostrarMsj(true, "Elija punto inicial.");
-    } else if (colorLine == "") {
-        mostrarMsj(true, "Seleccione un color.");
-    } else if (condicion) {
-        console.log(puntoInicial);
-        puntoActual.X = xFinal;
-        puntoActual.Y = yFinal;
-        drawLine(lienzo, puntoInicial, puntoActual, colorLine, grosorLinea);
-        puntoInicial.X = xFinal;
-        puntoInicial.Y = yFinal;
-        mostrarMsj(false, "");
+function dibujaTeclado(event) {
+    if (listaPuntos.length == 0) {
+        mostrarMsj(true, "Elija punto de inicio.");
     } else {
-        mostrarMsj(true, "Se sale del mapa.");
+        var puntoActual = listaPuntos[listaPuntos.length - 1];
+        var xFinal = puntoActual.X,
+            yFinal = puntoActual.Y;
+        if (event.keyCode == teclas.UP) {
+            yFinal -= tamPaso;
+        } else if (event.keyCode == teclas.DOWN) {
+            yFinal += tamPaso;
+        } else if (event.keyCode == teclas.LEFT) {
+            xFinal -= tamPaso;
+        } else if (event.keyCode == teclas.RIGHT) {
+            xFinal += tamPaso;
+        }
+        var condicion = verficaValor(xFinal, dibCanvas.width) &&
+            verficaValor(yFinal, dibCanvas.height);
+        if (condicion) {
+            addPunto(new punto(xFinal, yFinal, puntoActual.color, false));
+            mostrarMsj(false, "");
+            dibujarMundo();
+        } else {
+            mostrarMsj(true, "Se sale del mapa.");
+        }
     }
 }
 
@@ -144,16 +161,19 @@ function mostrarMsj(estadoMsj, msj) {
     msjAlerta.setAttribute("style", style);
 }
 
-function puntoMouse(event) {
-    puntoInicial.X = event.offsetX;
-    puntoInicial.Y = event.offsetY;
-    dibCanvas.width = dibCanvas.width;
-    dibujarPunto(lienzo, puntoInicial, "#FFF");
+function dibujarCursor(event) {
+    puntoCursor.X = event.offsetX;
+    puntoCursor.Y = event.offsetY;
+    dibujarMundo();
 }
 
 function selPuntoIni(event) {
-    console.log(event);
-    puntoInicial.X = event.offsetX;
-    puntoInicial.Y = event.offsetY;
-    console.log(puntoInicial);
+    puntoCursor.X = event.offsetX;
+    puntoCursor.Y = event.offsetY;
+    if (colorLine != "") {
+        addPunto(new punto(event.offsetX, event.offsetY, colorLine, true));
+        dibujarMundo();
+    } else {
+        mostrarMsj(true, "Seleccione un color.");
+    }
 }
