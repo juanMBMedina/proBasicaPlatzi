@@ -13,6 +13,7 @@ var dibCanvas = document.getElementById("dibujo");
 var lienzo = dibCanvas.getContext("2d");
 //Parametos Default
 var colorLine = "";
+var grosorLinea = 2;
 var teclas = {
     UP: 38,
     DOWN: 40,
@@ -20,15 +21,17 @@ var teclas = {
     RIGHT: 39
 };
 var puntoInicial = {
-    X: dibCanvas.width / 2,
-    Y: dibCanvas.height / 2
+    X: null,
+    Y: null
 };
-//Algo no cuadra.
-//console.log(dibCanvas);
-console.log(puntoInicial);
-var paso = 15;
+var puntoActual = {
+    X: null,
+    Y: null
+};
+var tamPaso = 1;
+var dibujoMouse = false;
 // Eventos.
-document.addEventListener("keyup", dibujarFigura);
+document.addEventListener("keydown", dibujaTeclado);
 color1.addEventListener("mouseover", onColor1);
 color2.addEventListener("mouseover", onColor2);
 color3.addEventListener("mouseover", onColor3);
@@ -36,8 +39,20 @@ color4.addEventListener("mouseover", onColor4);
 color5.addEventListener("mouseover", onColor5);
 color6.addEventListener("mouseover", onColor6);
 color7.addEventListener("mouseover", onColor7);
+// Prueba
+dibCanvas.addEventListener("click", selPuntoIni);
+dibCanvas.addEventListener("mousemove", puntoMouse);
 
-function drawLine(mapaDibujo, initPoint, endPoint, color) {
+
+function dibujarPunto(mapaDibujo, puntoDibujo, color) {
+    drawLine(mapaDibujo, puntoDibujo, { X: puntoDibujo.X - 5, Y: puntoDibujo.Y }, color, 5);
+    drawLine(mapaDibujo, puntoDibujo, { X: puntoDibujo.X + 5, Y: puntoDibujo.Y }, color, 5);
+    drawLine(mapaDibujo, puntoDibujo, { X: puntoDibujo.X, Y: puntoDibujo.Y - 5 }, color, 5);
+    drawLine(mapaDibujo, puntoDibujo, { X: puntoDibujo.X, Y: puntoDibujo.Y + 5 }, color, 5);
+}
+
+function drawLine(mapaDibujo, initPoint, endPoint, color, anchoLinea) {
+    mapaDibujo.lineWidth = anchoLinea;
     mapaDibujo.beginPath();
     mapaDibujo.strokeStyle = color;
     mapaDibujo.moveTo(initPoint.X, initPoint.Y);
@@ -51,25 +66,29 @@ function verficaValor(ptoAct, max) {
     return false;
 }
 
-function dibujarFigura(evento) {
+function dibujaTeclado(evento) {
     var xFinal = puntoInicial.X,
         yFinal = puntoInicial.Y;
     if (evento.keyCode == teclas.UP) {
-        yFinal = puntoInicial.Y - paso;
+        yFinal = puntoInicial.Y - tamPaso;
     } else if (evento.keyCode == teclas.DOWN) {
-        yFinal = puntoInicial.Y + paso;
+        yFinal = puntoInicial.Y + tamPaso;
     } else if (evento.keyCode == teclas.LEFT) {
-        xFinal = puntoInicial.X - paso;
+        xFinal = puntoInicial.X - tamPaso;
     } else if (evento.keyCode == teclas.RIGHT) {
-        xFinal = puntoInicial.X + paso;
+        xFinal = puntoInicial.X + tamPaso;
     }
     var condicion = verficaValor(xFinal, dibCanvas.width) &&
         verficaValor(yFinal, dibCanvas.height) && colorLine != "";
-
-    if (colorLine == "") {
+    if (puntoInicial.X == null && puntoInicial.Y == null) {
+        mostrarMsj(true, "Elija punto inicial.");
+    } else if (colorLine == "") {
         mostrarMsj(true, "Seleccione un color.");
     } else if (condicion) {
-        drawLine(lienzo, puntoInicial, { X: xFinal, Y: yFinal }, colorLine);
+        console.log(puntoInicial);
+        puntoActual.X = xFinal;
+        puntoActual.Y = yFinal;
+        drawLine(lienzo, puntoInicial, puntoActual, colorLine, grosorLinea);
         puntoInicial.X = xFinal;
         puntoInicial.Y = yFinal;
         mostrarMsj(false, "");
@@ -123,4 +142,18 @@ function mostrarMsj(estadoMsj, msj) {
     if (estadoMsj) style = "display: block";
     else style = "display: none";
     msjAlerta.setAttribute("style", style);
+}
+
+function puntoMouse(event) {
+    puntoInicial.X = event.offsetX;
+    puntoInicial.Y = event.offsetY;
+    dibCanvas.width = dibCanvas.width;
+    dibujarPunto(lienzo, puntoInicial, "#FFF");
+}
+
+function selPuntoIni(event) {
+    console.log(event);
+    puntoInicial.X = event.offsetX;
+    puntoInicial.Y = event.offsetY;
+    console.log(puntoInicial);
 }
