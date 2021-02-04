@@ -1,6 +1,5 @@
 //Parametos Default
 var colorLine = "";
-var maxTam = "1000px";
 // Objetos
 var numLineas = document.getElementById("txtIn");
 // Paletas de colores
@@ -111,8 +110,7 @@ function onColor7() {
 }
 
 function changeColor7() {
-    var style = "background-color: " + colorLine;
-    color7.setAttribute("style", style);
+    color7.setAttribute("style", "background-color: " + colorLine);
 }
 
 function mostrarMsj(estadoMsj, msj) {

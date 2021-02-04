@@ -9,19 +9,22 @@
 </head>
 
 <body>
-    <header class="barraNav">
-        <span><button class="botonMenu">Figura Lineas</button></span>
-        <span><button class="botonMenu">Dibujo Por Teclas</button></span>
+    <header style="margin:0px">
+        <ul class="barraNav">
+            <li class="barraItem"><a href="https://www.w3schools.com">Inicio</a></li>
+            <li class="barraItem"><a href="">Panel 1</a></li>
+            <li class="barraItem"><a href="">Panel 2</a></li>
+        </ul>
     </header>
     <!--pagina1-->
-    <h1>OBSERVA TU DIBUJO</h1>
-    <div>
-        <div>
+    <!-- <h1>OBSERVA TU DIBUJO</h1> -->
+    <div class="contGeneral">
+        <div class="contTexto">
             <span><input type="text" id="txtIn" placeholder="Cuantas lineas quieres:"/></span>
             <span><canvas class="marcoIndicador"  id="color7"></canvas></span>
         </div>
-        <canvas class="mapadibujo" width="300px" height="300px" id="dibujito"></canvas>
-        <div>
+        <canvas class="mapadibujo" id="dibujito"></canvas>
+        <div class="contColores">
             <canvas class="marcoColor" id="color1"></canvas>
             <canvas class="marcoColor" id="color2"></canvas>
             <canvas class="marcoColor" id="color3"></canvas>
@@ -29,12 +32,18 @@
             <canvas class="marcoColor" id="color5"></canvas>
             <canvas class="marcoColor" id="color6"></canvas>
         </div>
-        <p class="msjError" id="msjAlerta"></p>
+        <div class="msjError" id="msjAlerta"></div>
         <script src="dibujo.js" type="text/javascript"></script>
     </div>
     <!--pagina1-->
     <footer>
-        <p>Juan Miguel Blanco Medina</p>
+        <div class="contFooter">
+            <p class="msjFooter">
+                Sitio creado por: <br>
+                <em>Juan Miguel Blanco Medina</em>
+                <br>juanmblancom@gmail.com
+            </p>
+        </div>
     </footer>
 </body>
 
