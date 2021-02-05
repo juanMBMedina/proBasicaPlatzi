@@ -5,46 +5,54 @@ var teclas = {
     RIGHT: 39
 };
 
-function Mouse(_estDibujar, _estBorrar, _estDesc) {
-    //estados, dibujar, borrar, descansar, puntoCursor.
-    this.estDib = _estDibujar;
-    this.estBor = _estBorrar;
-    this.estDesc = _estDesc;
-    this.puntoCur = new Punto(null, null, "#FFF", false, 5),
+class Mouse {
+    constructor(_estDibujar, _estBorrar, _estDesc, _estPuntero) {
+        //estados, dibujar, borrar, descansar, puntoCursor.
+        this.estDib = _estDibujar;
+        this.estBor = _estBorrar;
+        this.estDesc = _estDesc;
+        this.estPuntero = _estPuntero;
+        this.puntoCur = new Punto(null, null, "#FFF", false, 5);
         // Conf. modos
         this.ActModoDib = function() {
             this.estDib = true;
             this.estBor = false;
             this.estDesc = false;
-        },
+        };
         this.ActModoBor = function() {
             this.estDib = false;
             this.estBor = true;
             this.estDesc = false;
-        },
+        };
         this.ActModoDesc = function() {
             this.estDib = false;
             this.estBor = false;
             this.estDesc = true;
-        }
-}
-
-function Punto(_x, _y, _color, _isInicial, _grosorLin) {
-    this.X = _x;
-    this.Y = _y;
-    this.color = _color;
-    this.isInicial = _isInicial;
-    this.grosorLin = _grosorLin;
-    this.isNull = function() {
-        if (this.X == null || this.Y == null) return true;
-        return false;
+        };
     }
 }
 
-function Linea(_puntos) {
-    //Linea Para borrar.
-    this.puntos = _puntos;
-    this.length = this.puntos.length
+class Punto {
+    constructor(_x, _y, _color, _isInicial, _grosorLin) {
+        this.X = _x;
+        this.Y = _y;
+        this.color = _color;
+        this.isInicial = _isInicial;
+        this.grosorLin = _grosorLin;
+        this.isNull = function() {
+            if (this.X == null || this.Y == null)
+                return true;
+            return false;
+        };
+    }
+}
+
+class Linea {
+    constructor(_puntos) {
+        //Linea Para borrar.
+        this.puntos = _puntos;
+        this.length = this.puntos.length;
+    }
 }
 //Arregols de los datos.
 var listaPuntos = new Array();
@@ -70,10 +78,7 @@ var grosorLinea = 3;
 var grosorPunto = 5;
 var tamPaso = 1;
 // Modos Mouse
-var puntero = new Mouse(false, false, true);
-var dibConMouse = false;
-var borConMouse = false;
-var noUsoMouse = true;
+var puntero = new Mouse(false, false, true, true);
 // Eventos.
 botonBorrar.addEventListener("click", pruebaBoton);
 color1.addEventListener("mouseover", onColor1);
@@ -87,9 +92,10 @@ dibCanvas.addEventListener("mousemove", movCursor);
 dibCanvas.addEventListener("mousedown", capturarPuntoIni);
 dibCanvas.addEventListener("mouseup", capturarPuntoFin);
 document.addEventListener("keydown", dibujaTeclado);
-
+setInterval(dibujarMundo, 5, puntero.estPuntero);
 // Pruebas.
-
+console.log(dibCanvas)
+console.log(lienzo);
 // Funciones
 function addPunto(newPunto) {
     listaPuntos.push(newPunto);
@@ -97,16 +103,17 @@ function addPunto(newPunto) {
 }
 
 function dibujarPunto(mapaDibujo, puntDib) {
-    dibujarLinea(mapaDibujo, puntDib, new Punto(puntDib.X + 5, puntDib.Y, puntDib.color, puntDib.isInicial, grosorPunto));
-    dibujarLinea(mapaDibujo, puntDib, new Punto(puntDib.X - 5, puntDib.Y, puntDib.color, puntDib.isInicial, grosorPunto));
-    dibujarLinea(mapaDibujo, puntDib, new Punto(puntDib.X, puntDib.Y + 5, puntDib.color, puntDib.isInicial, grosorPunto));
-    dibujarLinea(mapaDibujo, puntDib, new Punto(puntDib.X, puntDib.Y - 5, puntDib.color, puntDib.isInicial, grosorPunto));
+    lienzo.clearRect(0, 0, dibCanvas.width, dibCanvas.height);
+    dibujarLinea(mapaDibujo, puntDib, { X: puntDib.X + 5, Y: puntDib.Y });
+    dibujarLinea(mapaDibujo, puntDib, { X: puntDib.X - 5, Y: puntDib.Y });
+    dibujarLinea(mapaDibujo, puntDib, { X: puntDib.X, Y: puntDib.Y + 5 });
+    dibujarLinea(mapaDibujo, puntDib, { X: puntDib.X, Y: puntDib.Y - 5 });
 }
 
 function dibujarLinea(mapaDibujo, puntoIni, puntoFin) {
-    mapaDibujo.lineWidth = puntoFin.grosorLin;
+    mapaDibujo.lineWidth = puntoIni.grosorLin;
     mapaDibujo.beginPath();
-    mapaDibujo.strokeStyle = puntoFin.color;
+    mapaDibujo.strokeStyle = puntoIni.color;
     mapaDibujo.moveTo(puntoIni.X, puntoIni.Y);
     mapaDibujo.lineTo(puntoFin.X, puntoFin.Y);
     mapaDibujo.stroke();
@@ -114,7 +121,6 @@ function dibujarLinea(mapaDibujo, puntoIni, puntoFin) {
 }
 
 function dibujarMundo(conPunto) {
-    dibCanvas.width = dibCanvas.width;
     if (conPunto) dibujarPunto(lienzo, puntero.puntoCur);
     if (listaPuntos.length > 1) {
         for (var i = 0; i < listaPuntos.length; i++) {
@@ -153,8 +159,6 @@ function dibujaTeclado(event) {
         } else if (condicion) {
             addPunto(new Punto(xFinal, yFinal, colorLine, false, grosorLinea));
             mostrarMsj(false, "");
-            dibujarMundo(true);
-            dibujarPunto(lienzo, listaPuntos[tamLista - 1]);
         } else {
             mostrarMsj(true, "Se sale del mapa.");
         }
@@ -214,7 +218,6 @@ function movCursor(event) {
     puntero.puntoCur.X = event.offsetX;
     puntero.puntoCur.Y = event.offsetY;
     if (colorLine != "") puntero.puntoCur.color = colorLine;
-    dibujarMundo(!puntero.estDib);
     if (puntero.estDib) {
         // Para dibujar una Linea!!!
         //dibujarLinea(lienzo, listaPuntos[listaPuntos["length"] - 1],
@@ -236,8 +239,6 @@ function capturarPuntoIni() {
         if (puntero.estDesc) {
             puntero.ActModoDib();
             addPunto(new Punto(puntero.puntoCur.X, puntero.puntoCur.Y, puntero.puntoCur.color, true, grosorLinea));
-            dibujarMundo(true);
-            dibujarPunto(lienzo, listaPuntos[listaPuntos["length"] - 1]);
         }
 
     } else {
@@ -251,7 +252,6 @@ function capturarPuntoFin() {
         if (puntero.estDib) {
             puntero.ActModoDesc();
             addPunto(new Punto(puntero.puntoCur.X, puntero.puntoCur.Y, puntero.puntoCur.color, false, grosorLinea));
-            dibujarMundo(true);
         }
         if (puntero.estBor) puntero.ActModoDesc();
 
@@ -262,7 +262,7 @@ function capturarPuntoFin() {
 }
 
 
-function pruebaBoton(event) {
+function pruebaBoton() {
     puntero.ActModoBor();
     console.log(listaPuntos);
     var indexIni = 0;
