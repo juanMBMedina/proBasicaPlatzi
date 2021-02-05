@@ -32,7 +32,8 @@ var lienzo = dibCanvas.getContext("2d");
 //Parametos Default
 var colorLine = "";
 var grosorLinea = 2;
-var puntoCursor = new punto(null, null, "#FFF", false);
+var grosorPunto = 5;
+var puntoCursor = new punto(null, null, "#FFF", false, 5);
 var tamPaso = 2;
 var dibujoMouse = false;
 // Eventos.
@@ -48,36 +49,20 @@ color7.addEventListener("mouseover", onColor7);
 dibCanvas.addEventListener("mousemove", dibujarCursor);
 dibCanvas.addEventListener("mousedown", prueba1);
 dibCanvas.addEventListener("mouseup", prueba2);
-// Funciones Prueba.
-var puntoCursor1 = new punto(100, 100, "#FFF", false, 5);
-var puntoCursor2 = new punto(150, 150, "#FFF", false, 5);
-dibujarLinea(lienzo, puntoCursor1, puntoCursor2);
 
-function dibujarLineaPrueba(mapaDibujo, puntoIni, puntoFin) {
-    console.log(puntoIni, puntoFin);
-    mapaDibujo.lineWidth = puntoFin.grosorLin;
-    mapaDibujo.beginPath();
-    mapaDibujo.strokeStyle = puntoFin.color;
-    mapaDibujo.moveTo(puntoIni.X, puntoIni.Y);
-    mapaDibujo.lineTo(puntoFin.X, puntoFin.Y);
-    mapaDibujo.stroke();
-    mapaDibujo.closePath();
-}
-//
 function addPunto(newPunto) {
     listaPuntos.push(newPunto);
     //console.log(listaPuntos);
 }
 
-function dibujarPunto(mapaDibujo, puntoDibujo) {
-    dibujarLinea(mapaDibujo, puntoDibujo, { X: puntoDibujo.X - 5, Y: puntoDibujo.Y }, puntoDibujo.color, 5);
-    dibujarLinea(mapaDibujo, puntoDibujo, { X: puntoDibujo.X + 5, Y: puntoDibujo.Y }, puntoDibujo.color, 5);
-    dibujarLinea(mapaDibujo, puntoDibujo, { X: puntoDibujo.X, Y: puntoDibujo.Y - 5 }, puntoDibujo.color, 5);
-    dibujarLinea(mapaDibujo, puntoDibujo, { X: puntoDibujo.X, Y: puntoDibujo.Y + 5 }, puntoDibujo.color, 5);
+function dibujarPunto(mapaDibujo, puntDib) {
+    dibujarLinea(mapaDibujo, puntDib, new punto(puntDib.X + 5, puntDib.Y, puntDib.color, puntDib.isInicial, grosorPunto));
+    dibujarLinea(mapaDibujo, puntDib, new punto(puntDib.X - 5, puntDib.Y, puntDib.color, puntDib.isInicial, grosorPunto));
+    dibujarLinea(mapaDibujo, puntDib, new punto(puntDib.X, puntDib.Y + 5, puntDib.color, puntDib.isInicial, grosorPunto));
+    dibujarLinea(mapaDibujo, puntDib, new punto(puntDib.X, puntDib.Y - 5, puntDib.color, puntDib.isInicial, grosorPunto));
 }
 
 function dibujarLinea(mapaDibujo, puntoIni, puntoFin) {
-    console.log(puntoIni, puntoFin);
     mapaDibujo.lineWidth = puntoFin.grosorLin;
     mapaDibujo.beginPath();
     mapaDibujo.strokeStyle = puntoFin.color;
@@ -125,7 +110,7 @@ function dibujaTeclado(event) {
         if (colorLine == "") {
             mostrarMsj(true, "Seleccione color.");
         } else if (condicion) {
-            addPunto(new punto(xFinal, yFinal, colorLine, false));
+            addPunto(new punto(xFinal, yFinal, colorLine, false, grosorLinea));
             mostrarMsj(false, "");
             dibujarMundo();
             dibujarPunto(lienzo, listaPuntos[tamLista - 1]);
@@ -198,7 +183,7 @@ function dibujarCursor(event) {
 function prueba1() {
     if (colorLine != "") {
         dibujoMouse = true;
-        addPunto(new punto(puntoCursor.X, puntoCursor.Y, puntoCursor.color, true));
+        addPunto(new punto(puntoCursor.X, puntoCursor.Y, puntoCursor.color, true, grosorLinea));
         dibujarMundo();
         dibujarPunto(lienzo, listaPuntos[listaPuntos["length"] - 1]);
     } else {
@@ -209,7 +194,7 @@ function prueba1() {
 function prueba2() {
     if (colorLine != "") {
         dibujoMouse = false;
-        addPunto(new punto(puntoCursor.X, puntoCursor.Y, puntoCursor.color, false));
+        addPunto(new punto(puntoCursor.X, puntoCursor.Y, puntoCursor.color, false, grosorLinea));
         dibujarMundo();
     } else {
         mostrarMsj(true, "Seleccione un color.");
