@@ -2,9 +2,8 @@ var butTema = document.getElementById("cambioTema");
 var etiquetaLink = document.getElementById("temaLink");
 var esClaro = true;
 butTema.addEventListener("click", cambiarTema);
+cambiarTema();
 //Inicial para el tema.
-cambiarTema()
-
 function cambiarTema() {
     if (esClaro) {
         ponerClaro();

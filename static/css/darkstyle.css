@@ -30,6 +30,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: rgba(31, 29, 29, 0.932);
     text-align: center;
+    font-size: 18px;
     margin: 0px;
     color: aliceblue;
 }
@@ -107,6 +108,18 @@ input[type="text"] {
 
 input[type="text"]:hover {
     background-color: rgba(59, 58, 58, 0.932);
+}
+
+input[type="button"] {
+    width: 100px;
+    border-radius: 5px;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #695070;
+}
+
+input[type="button"]:hover {
+    background-color: #cc9ada;
 }
 
 .mapadibujo {
