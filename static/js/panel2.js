@@ -48,15 +48,19 @@ class Punto {
 }
 
 class Linea {
-    constructor(_puntos) {
+    constructor() {
         //Linea Para borrar.
-        this.puntos = _puntos;
+        this.puntos = [];
         this.length = this.puntos.length;
+        this.push = function(newPunto) {
+            this.puntos.push(newPunto);
+            this.length = this.puntos.length;
+        };
     }
 }
 //Arregols de los datos.
-var listaPuntos = new Array();
 var listaLineas = new Array();
+var nuevaLinea = new Linea();
 // Boton Borrar
 var botonBorrar = document.getElementById("botonBorrar");
 // Paletas de colores
@@ -92,15 +96,10 @@ dibCanvas.addEventListener("mousemove", movCursor);
 dibCanvas.addEventListener("mousedown", capturarPuntoIni);
 dibCanvas.addEventListener("mouseup", capturarPuntoFin);
 document.addEventListener("keydown", dibujaTeclado);
-setInterval(dibujarMundo, 5, puntero.estPuntero);
+setInterval(dibujarMundo, 10, puntero.estPuntero);
 // Pruebas.
-console.log(dibCanvas)
-console.log(lienzo);
+
 // Funciones
-function addPunto(newPunto) {
-    listaPuntos.push(newPunto);
-    //console.log(listaPuntos);
-}
 
 function dibujarPunto(mapaDibujo, puntDib) {
     lienzo.clearRect(0, 0, dibCanvas.width, dibCanvas.height);
@@ -122,12 +121,10 @@ function dibujarLinea(mapaDibujo, puntoIni, puntoFin) {
 
 function dibujarMundo(conPunto) {
     if (conPunto) dibujarPunto(lienzo, puntero.puntoCur);
-    if (listaPuntos.length > 1) {
-        for (var i = 0; i < listaPuntos.length; i++) {
-            if (listaPuntos[i].isInicial) i += 1;
-            if (i < listaPuntos.length) {
-                dibujarLinea(lienzo, listaPuntos[i - 1], listaPuntos[i], listaPuntos[i].color, grosorLinea);
-            }
+    for (var indLin = 0; indLin < listaLineas.length; indLin++) {
+        var linAct = listaLineas[indLin];
+        for (indPun = 1; indPun < linAct.length - 1; indPun++) {
+            dibujarLinea(lienzo, linAct.puntos[indPun], linAct.puntos[indPun + 1]);
         }
     }
 }
@@ -157,7 +154,7 @@ function dibujaTeclado(event) {
         if (colorLine == "") {
             mostrarMsj(true, "Seleccione color.");
         } else if (condicion) {
-            addPunto(new Punto(xFinal, yFinal, colorLine, false, grosorLinea));
+            //Añadir punto a la linea.
             mostrarMsj(false, "");
         } else {
             mostrarMsj(true, "Se sale del mapa.");
@@ -222,7 +219,14 @@ function movCursor(event) {
         // Para dibujar una Linea!!!
         //dibujarLinea(lienzo, listaPuntos[listaPuntos["length"] - 1],
         //    puntero.puntoCur, puntero.puntoCur.color, grosorLinea);
-        addPunto(new Punto(puntero.puntoCur.X, puntero.puntoCur.Y, puntero.puntoCur.color, false, grosorLinea));
+        nuevaLinea.push(
+            new Punto(
+                puntero.puntoCur.X,
+                puntero.puntoCur.Y,
+                puntero.puntoCur.color,
+                false,
+                grosorLinea)
+        );
         console.log("Estoy dibujando.");
     }
     if (puntero.estBor) {
@@ -235,12 +239,20 @@ function movCursor(event) {
 
 function capturarPuntoIni() {
     if (colorLine != "") {
-
         if (puntero.estDesc) {
             puntero.ActModoDib();
-            addPunto(new Punto(puntero.puntoCur.X, puntero.puntoCur.Y, puntero.puntoCur.color, true, grosorLinea));
+            nuevaLinea = new Linea();
+            listaLineas.push(nuevaLinea);
+            nuevaLinea.push(
+                new Punto(
+                    puntero.puntoCur.X,
+                    puntero.puntoCur.Y,
+                    puntero.puntoCur.color,
+                    true,
+                    grosorLinea)
+            );
         }
-
+        console.log(listaLineas);
     } else {
         mostrarMsj(true, "Seleccione un color.");
     }
@@ -248,10 +260,17 @@ function capturarPuntoIni() {
 
 function capturarPuntoFin() {
     if (colorLine != "") {
-
         if (puntero.estDib) {
             puntero.ActModoDesc();
-            addPunto(new Punto(puntero.puntoCur.X, puntero.puntoCur.Y, puntero.puntoCur.color, false, grosorLinea));
+            nuevaLinea.push(
+                new Punto(
+                    puntero.puntoCur.X,
+                    puntero.puntoCur.Y,
+                    puntero.puntoCur.color,
+                    false,
+                    grosorLinea)
+            );
+            console.log(listaLineas);
         }
         if (puntero.estBor) puntero.ActModoDesc();
 
