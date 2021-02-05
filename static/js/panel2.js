@@ -1,8 +1,9 @@
-function punto(_x, _y, _color, _isInicial) {
+function punto(_x, _y, _color, _isInicial, _grosorLin) {
     this.X = _x;
     this.Y = _y;
     this.color = _color;
     this.isInicial = _isInicial;
+    this.grosorLin = _grosorLin;
     this.isNull = function() {
         if (this.X == null || this.Y == null) return true;
         return false;
@@ -47,7 +48,22 @@ color7.addEventListener("mouseover", onColor7);
 dibCanvas.addEventListener("mousemove", dibujarCursor);
 dibCanvas.addEventListener("mousedown", prueba1);
 dibCanvas.addEventListener("mouseup", prueba2);
+// Funciones Prueba.
+var puntoCursor1 = new punto(100, 100, "#FFF", false, 5);
+var puntoCursor2 = new punto(150, 150, "#FFF", false, 5);
+dibujarLinea(lienzo, puntoCursor1, puntoCursor2);
 
+function dibujarLineaPrueba(mapaDibujo, puntoIni, puntoFin) {
+    console.log(puntoIni, puntoFin);
+    mapaDibujo.lineWidth = puntoFin.grosorLin;
+    mapaDibujo.beginPath();
+    mapaDibujo.strokeStyle = puntoFin.color;
+    mapaDibujo.moveTo(puntoIni.X, puntoIni.Y);
+    mapaDibujo.lineTo(puntoFin.X, puntoFin.Y);
+    mapaDibujo.stroke();
+    mapaDibujo.closePath();
+}
+//
 function addPunto(newPunto) {
     listaPuntos.push(newPunto);
     //console.log(listaPuntos);
@@ -60,12 +76,13 @@ function dibujarPunto(mapaDibujo, puntoDibujo) {
     dibujarLinea(mapaDibujo, puntoDibujo, { X: puntoDibujo.X, Y: puntoDibujo.Y + 5 }, puntoDibujo.color, 5);
 }
 
-function dibujarLinea(mapaDibujo, initPoint, endPoint, color, anchoLinea) {
-    mapaDibujo.lineWidth = anchoLinea;
+function dibujarLinea(mapaDibujo, puntoIni, puntoFin) {
+    console.log(puntoIni, puntoFin);
+    mapaDibujo.lineWidth = puntoFin.grosorLin;
     mapaDibujo.beginPath();
-    mapaDibujo.strokeStyle = color;
-    mapaDibujo.moveTo(initPoint.X, initPoint.Y);
-    mapaDibujo.lineTo(endPoint.X, endPoint.Y);
+    mapaDibujo.strokeStyle = puntoFin.color;
+    mapaDibujo.moveTo(puntoIni.X, puntoIni.Y);
+    mapaDibujo.lineTo(puntoFin.X, puntoFin.Y);
     mapaDibujo.stroke();
     mapaDibujo.closePath();
 }
