@@ -1,15 +1,3 @@
-function Punto(_x, _y, _color, _isInicial, _grosorLin) {
-    this.X = _x;
-    this.Y = _y;
-    this.color = _color;
-    this.isInicial = _isInicial;
-    this.grosorLin = _grosorLin;
-    this.isNull = function() {
-        if (this.X == null || this.Y == null) return true;
-        return false;
-    }
-}
-var listaPuntos = new Array();
 var teclas = {
     UP: 38,
     DOWN: 40,
@@ -40,6 +28,27 @@ function Mouse(_estDibujar, _estBorrar, _estDesc) {
             this.estDesc = true;
         }
 }
+
+function Punto(_x, _y, _color, _isInicial, _grosorLin) {
+    this.X = _x;
+    this.Y = _y;
+    this.color = _color;
+    this.isInicial = _isInicial;
+    this.grosorLin = _grosorLin;
+    this.isNull = function() {
+        if (this.X == null || this.Y == null) return true;
+        return false;
+    }
+}
+
+function Linea(_puntos) {
+    //Linea Para borrar.
+    this.puntos = _puntos;
+    this.length = this.puntos.length
+}
+//Arregols de los datos.
+var listaPuntos = new Array();
+var listaLineas = new Array();
 // Boton Borrar
 var botonBorrar = document.getElementById("botonBorrar");
 // Paletas de colores
@@ -231,7 +240,6 @@ function capturarPuntoIni() {
             dibujarPunto(lienzo, listaPuntos[listaPuntos["length"] - 1]);
         }
 
-
     } else {
         mostrarMsj(true, "Seleccione un color.");
     }
@@ -256,4 +264,19 @@ function capturarPuntoFin() {
 
 function pruebaBoton(event) {
     puntero.ActModoBor();
+    console.log(listaPuntos);
+    var indexIni = 0;
+    var indexFin = 0;
+    var listaPrueba = [];
+    for (var i = 0; i < listaPuntos.length; i++) {
+        if (listaPuntos[i].isInicial && i > indexIni) {
+            indexFin = i - 1;
+            console.log(indexIni, indexFin);
+            listaLineas.push(new Linea(listaPrueba));
+            listaPrueba = [];
+            indexIni = i;
+        }
+        listaPrueba.push(listaPuntos[i]);
+    }
+    listaLineas.push(new Linea(listaPrueba));
 }
