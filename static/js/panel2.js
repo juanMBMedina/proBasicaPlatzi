@@ -202,6 +202,7 @@ setInterval(dibujarMundo, 10, true);
 setInterval(borrarLin, 10);
 // Pruebas.
 dibCanvas.addEventListener("mouseleave", capturarPuntoFin);
+
 // Funciones
 
 function dibujarMundo(conPunto) {
@@ -353,9 +354,11 @@ function capturarPuntoFin() {
         accionAct = false;
     } else if (borrador.estBor) {
         if (!borrador.tipoBorrado) {
+            // Color... pero no me cuadra...
+            var colorBack = getStyle(dibCanvas, 'background-color');
             var nLista = new Array();
             listaLineas.forEach(linea => {
-                var subLineas = linea.divLinea("#000");
+                var subLineas = linea.divLinea(colorBack);
                 subLineas.forEach(subLinea => {
                     nLista.push(subLinea);
                 });
@@ -397,13 +400,20 @@ function borrarLin() {
                 });
             }
         } else if (!borrador.tipoBorrado) {
+            // Color... pero no me cuadra...
+            var colorBack = getStyle(dibCanvas, 'background-color');
             listaLineas.forEach(linea => {
                 linea.puntos.forEach(punto => {
                     if (puntero.isEnArea(punto.X, punto.Y)) {
-                        punto.cambiarColor("#000");
+                        punto.cambiarColor(colorBack);
                     }
                 });
             });
         }
     }
+}
+
+function getStyle(objeto, propiedad) {
+    let estilo = window.getComputedStyle(objeto);
+    return estilo[propiedad];
 }
