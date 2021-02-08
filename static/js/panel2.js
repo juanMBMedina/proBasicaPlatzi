@@ -59,20 +59,23 @@ class Linea {
         var newLista = [];
         var nuevaLin = new Linea();
         for (var i = 0; i < this.length - 1; i++) {
-            if (this.puntos[i].color == color && this.puntos[i + 1].color != color) {
+            if (i == 0 && this.puntos[i].color != color && this.puntos[i + 1].color != color) {
                 nuevaLin = new Linea();
+                nuevaLin.push(this.puntos[i]);
+            } else if (this.puntos[i].color != color && this.puntos[i + 1].color != color) {
+                nuevaLin.push(this.puntos[i]);
+                if (i == this.length - 2) {
+                    nuevaLin.push(this.puntos[i + 1]);
+                    newLista.push(nuevaLin);
+                }
             } else if (this.puntos[i].color != color && this.puntos[i + 1].color == color) {
                 nuevaLin.push(this.puntos[i]);
                 newLista.push(nuevaLin);
-            } else if (this.puntos[i].color != color && this.puntos[i + 1].color != color) {
-                if (i == 0) {
-                    nuevaLin = new Linea();
-                }
-                nuevaLin.push(this.puntos[i]);
-                if (i == this.length - 2) {
-                    if (this.puntos[i + 1].color != color) nuevaLin.push(this.puntos[i + 1]);
-                    newLista.push(nuevaLin);
-                }
+                nuevaLin = new Linea();
+            } else if (i == this.length - 2 && this.puntos[i].color == color && this.puntos[i + 1].color != color) {
+                nuevaLin = new Linea();
+                nuevaLin.push(this.puntos[i + 1]);
+                newLista.push(nuevaLin);
             }
         }
         return newLista;
@@ -85,7 +88,7 @@ class Linea {
 class Mouse extends Punto {
     constructor(_estDibujar, _estBorrar, _estDesc, _estPuntero) {
         //estados, dibujar, borrar, descansar, puntoCursor.
-        super(null, null, "#FFF", 5);
+        super(null, null, "#FFF", 3);
         this.estDib = _estDibujar;
         this.estBor = _estBorrar;
         this.estDesc = _estDesc;
@@ -180,6 +183,7 @@ var lienzo = dibCanvas.getContext("2d");
 var colorLine = "";
 var grosorLinea = 3;
 var tamPaso = 1;
+var colorBack = getStyle(dibCanvas, 'background-color');
 // Modos Mouse
 var puntero = new Mouse(false, false, true, true);
 var borrador = new Borrador(false);
@@ -202,7 +206,6 @@ setInterval(dibujarMundo, 10, true);
 setInterval(borrarLin, 10);
 // Pruebas.
 dibCanvas.addEventListener("mouseleave", capturarPuntoFin);
-
 // Funciones
 
 function dibujarMundo(conPunto) {
@@ -296,6 +299,7 @@ function mostrarMsj(estadoMsj, msj) {
 }
 
 function capturarPuntoIni() {
+    colorBack = getStyle(dibCanvas, 'background-color');
     if (puntero.estDesc && !borrador.estBor) {
         mostrarMsj(true, "Seleccione una Acción");
     } else if (puntero.estDib) {
@@ -354,11 +358,11 @@ function capturarPuntoFin() {
         accionAct = false;
     } else if (borrador.estBor) {
         if (!borrador.tipoBorrado) {
-            // Color... pero no me cuadra...
-            var colorBack = getStyle(dibCanvas, 'background-color');
             var nLista = new Array();
             listaLineas.forEach(linea => {
                 var subLineas = linea.divLinea(colorBack);
+                console.log(linea);
+                console.log(subLineas);
                 subLineas.forEach(subLinea => {
                     nLista.push(subLinea);
                 });
@@ -400,11 +404,10 @@ function borrarLin() {
                 });
             }
         } else if (!borrador.tipoBorrado) {
-            // Color... pero no me cuadra...
-            var colorBack = getStyle(dibCanvas, 'background-color');
             listaLineas.forEach(linea => {
                 linea.puntos.forEach(punto => {
                     if (puntero.isEnArea(punto.X, punto.Y)) {
+                        //punto.cambiarColor(colorBack);
                         punto.cambiarColor(colorBack);
                     }
                 });
