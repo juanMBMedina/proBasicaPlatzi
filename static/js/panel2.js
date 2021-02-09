@@ -55,9 +55,11 @@ class Linea {
         this.length = this.puntos.length;
     };
     divLinea(color) {
-        // Divide la linea por un color definido,
+        // Divide la linea por un color definido, Buuuuug !!!!!!!
+
         var newLista = [];
         var nuevaLin = new Linea();
+        console.log(this.puntos);
         for (var i = 0; i < this.length - 1; i++) {
             if (i == 0 && this.puntos[i].color != color && this.puntos[i + 1].color != color) {
                 nuevaLin = new Linea();
@@ -78,6 +80,7 @@ class Linea {
                 newLista.push(nuevaLin);
             }
         }
+        console.log(newLista);
         return newLista;
     };
     verObj() {
@@ -88,7 +91,7 @@ class Linea {
 class Mouse extends Punto {
     constructor(_estDibujar, _estBorrar, _estDesc, _estPuntero) {
         //estados, dibujar, borrar, descansar, puntoCursor.
-        super(null, null, "#FFF", 3);
+        super(null, null, "#FFF", 5);
         this.estDib = _estDibujar;
         this.estBor = _estBorrar;
         this.estDesc = _estDesc;
@@ -185,7 +188,7 @@ var grosorLinea = 3;
 var tamPaso = 1;
 var colorBack = getStyle(dibCanvas, 'background-color');
 // Modos Mouse
-var puntero = new Mouse(false, false, true, true);
+var puntero = new Mouse(false, false, true, false);
 var borrador = new Borrador(false);
 // Eventos.
 botonBorrarNormal.addEventListener("click", borrarNormal);
@@ -407,7 +410,6 @@ function borrarLin() {
             listaLineas.forEach(linea => {
                 linea.puntos.forEach(punto => {
                     if (puntero.isEnArea(punto.X, punto.Y)) {
-                        //punto.cambiarColor(colorBack);
                         punto.cambiarColor(colorBack);
                     }
                 });
