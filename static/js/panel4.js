@@ -1,5 +1,58 @@
-var vp = document.getElementById("dibujo");
-var papel = vp.getContext("2d");
+//var vp = document.getElementById("dibujo");
+//var papel = vp.getContext("2d");
+
+var imagenes = [];
+imagenes["cerdo"] = "../static/images/cerdo.png";
+imagenes["fondo"] = "../static/images/fondo.png"
+imagenes["pollo"] = "../static/images/pollo.png";
+imagenes["vaca"] = "../static/images/vaca.png";
+
+class Pakiman {
+    constructor(nombre, vida, ataque, tipo) {
+        this.nombre = nombre;
+        this.vida = vida;
+        this.ataque = ataque;
+        this.tipo = tipo;
+        this.imagen = new Image();
+        this.imagen.src = imagenes[this.tipo];
+    };
+    hablar(msj) {
+        alert(msj);
+    }
+    mostrar(elemPadre) {
+        var div = document.createElement("div");
+        div.style = "display:flex;"
+        var colIzq = document.createElement("span");
+        var colDer = document.createElement("span");
+        var nombre = document.createElement("strong");
+        var salto = document.createElement("br");
+        var vida = document.createElement("p");
+        var ataque = document.createElement("p");
+        nombre.textContent = "Nombre: " + this.nombre;
+        vida.textContent = "Vida:" + this.vida;
+        ataque.textContent = "Ataque:" + this.ataque;
+        elemPadre.appendChild(div);
+        div.appendChild(colIzq);
+        div.appendChild(colDer);
+        colIzq.appendChild(nombre);
+        colIzq.appendChild(vida);
+        colIzq.appendChild(ataque);
+        colDer.appendChild(this.imagen);
+        elemPadre.appendChild(salto);
+    }
+}
+
+var coleccion = [];
+coleccion.push(new Pakiman("cauchin", 100, 80, "cerdo"));
+coleccion.push(new Pakiman("pokacho", 100, 80, "pollo"));
+coleccion.push(new Pakiman("tocinauro", 100, 80, "vaca"));
+
+var listaPakimanes = document.getElementById("listaPakiman");
+coleccion.forEach(pakiman => {
+    pakiman.mostrar(listaPakimanes);
+});
+
+/*
 // Parámetros Iniciales.
 var tamPaso = 5;
 var cantVacas = aleatorio(1, 6);
@@ -62,6 +115,7 @@ function generaPos(cantAnimal) {
     for (var i = 0; i < cantAnimal; i++) {
         var x = 40 * aleatorio(0, 10);
         var y = 40 * aleatorio(0, 10);
+        console.log(x, y);
         while ((x > 300 && y > 300) || (x < 80 && y < 80)) {
             x = 80 * aleatorio(0, 5);
             y = 80 * aleatorio(0, 5);
@@ -142,3 +196,4 @@ function dibujar() {
     };
     if (cerdo.cargaOk) papel.drawImage(cerdo.imagen, cerdo.X, cerdo.Y);
 }
+*/
