@@ -97,16 +97,18 @@ header {
     margin: 0px;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="number"] {
     font-size: large;
-    width: 80%;
+    width: 70%;
     border-radius: 10px;
     text-align: center;
     color: aliceblue;
     background-color: rgba(31, 29, 29, 0.932);
 }
 
-input[type="text"]:hover {
+input[type="text"]:hover,
+input[type="number"]:hover {
     background-color: rgba(59, 58, 58, 0.932);
 }
 

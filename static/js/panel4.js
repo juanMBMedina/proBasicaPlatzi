@@ -1,6 +1,3 @@
-//var vp = document.getElementById("dibujo");
-//var papel = vp.getContext("2d");
-
 var imagenes = [];
 imagenes["cerdo"] = "../static/images/cerdo.png";
 imagenes["fondo"] = "../static/images/fondo.png"
