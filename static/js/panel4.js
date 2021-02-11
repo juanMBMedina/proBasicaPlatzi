@@ -1,8 +1,8 @@
 var imagenes = [];
-imagenes["cerdo"] = "../static/images/cerdo.png";
-imagenes["fondo"] = "../static/images/fondo.png"
-imagenes["pollo"] = "../static/images/pollo.png";
-imagenes["vaca"] = "../static/images/vaca.png";
+imagenes["cerdo"] = "./static/images/cerdo.png";
+imagenes["fondo"] = "./static/images/fondo.png"
+imagenes["pollo"] = "./static/images/pollo.png";
+imagenes["vaca"] = "./static/images/vaca.png";
 
 class Pakiman {
     constructor(nombre, vida, ataque, tipo) {

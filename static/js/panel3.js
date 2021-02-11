@@ -17,25 +17,25 @@ posVacas = generaPos(cantVacas);
 posPollos = generaPos(cantPollos);
 
 var fondo = {
-    url: "../static/images/tile.png",
+    url: "./static/images/tile.png",
     cargaOk: false,
 }
 
 var vaca = {
-    url: "../static/images/vaca.png",
+    url: "./static/images/vaca.png",
     cargaOk: false,
     X: 0,
     Y: 0,
 }
 var pollo = {
-    url: "../static/images/pollo.png",
+    url: "./static/images/pollo.png",
     cargaOk: false,
     X: 0,
     Y: 0
 }
 
 var cerdo = {
-    url: "../static/images/cerdo.png",
+    url: "./static/images/cerdo.png",
     cargaOk: false,
     X: 0,
     Y: 0
