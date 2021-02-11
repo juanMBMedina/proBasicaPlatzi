@@ -59,10 +59,10 @@ function actulizarCaja() {
 
 var caja = [];
 var imagenes = [];
-imagenes.push("../static/images/billete100.png");
-imagenes.push("../static/images/billete50.png");
-imagenes.push("../static/images/billete20.png");
-imagenes.push("../static/images/billete10.png");
+imagenes.push("./static/images/billete100.png");
+imagenes.push("./static/images/billete50.png");
+imagenes.push("./static/images/billete20.png");
+imagenes.push("./static/images/billete10.png");
 caja.push(new Billete(100, 3, imagenes[0]));
 caja.push(new Billete(50, 3, imagenes[1]));
 caja.push(new Billete(20, 2, imagenes[2]));
