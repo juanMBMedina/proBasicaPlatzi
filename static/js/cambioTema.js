@@ -14,9 +14,9 @@ function cambiarTema() {
 }
 
 function ponerClaro() {
-    etiquetaLink.setAttribute("href", "../static/css/lightstyle.css");
+    etiquetaLink.setAttribute("href", "./static/css/lightstyle.css");
 }
 
 function ponerOscuro() {
-    etiquetaLink.setAttribute("href", "../static/css/darkstyle.css");
+    etiquetaLink.setAttribute("href", "./static/css/darkstyle.css");
 }
